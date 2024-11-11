@@ -26,4 +26,5 @@ erl_crash.dump
 authentication-*.tar
 
 docker-compose-dev.yml
+db/
 

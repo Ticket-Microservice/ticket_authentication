@@ -22,6 +22,17 @@ config :authentication, AuthenticationWeb.Endpoint,
   pubsub_server: Authentication.PubSub,
   live_view: [signing_salt: "NVx2/StS"]
 
+config :authentication, Ticket_BE.Guardian,
+  issuer: "ticket_BE",
+  secret_key: System.get_env("SECRET_KEY"),
+  # serializer: Ticket_BE.GuardianSerializer,
+  allowed_algos: ["HS512"] # optional
+  # verify_module: Guardian.JWT,  # optional
+  # issuer: "Ticket_BE", # optional
+  # # ttl: { 1, :days },
+  # allowed_drift: 2000,
+  # verify_issuer: true # optional
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

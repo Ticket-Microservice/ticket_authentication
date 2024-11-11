@@ -2,13 +2,14 @@ import Config
 
 # Configure your database
 config :authentication, Authentication.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "authentication_dev",
+  username: System.get_env("DATABASE_USERNAME"),
+  password: System.get_env("DATABASE_PWD"),
+  hostname: System.get_env("DATABASE_HOSTNAME"),
+  database: System.get_env("DATABASE_DBNAME"),
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+  pool_size: 10,
+  port: String.to_integer(System.get_env("DATABASE_PORT") || "5432")
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
