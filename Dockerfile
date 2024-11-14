@@ -16,6 +16,6 @@ RUN mix do deps.get, deps.compile
 # COPY test_entrypoint.sh .
 # RUN chmod +x /app/test_entrypoint.sh
 
-EXPOSE 4000
+EXPOSE 4000 50051
 # CMD ["/app/entrypoint.sh"]
 CMD ["mix", "phx.server"]

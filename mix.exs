@@ -46,7 +46,9 @@ defmodule Authentication.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.2"},
       {:guardian, "~> 2.3"},
-      {:bcrypt_elixir, "~> 3.0"}
+      {:bcrypt_elixir, "~> 3.0"},
+      {:grpc, "~> 0.9"},
+      {:protobuf, "~> 0.13.0"}
     ]
   end
 

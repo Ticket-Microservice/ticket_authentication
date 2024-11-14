@@ -17,7 +17,8 @@ defmodule Authentication.Application do
       # Start a worker by calling: Authentication.Worker.start_link(arg)
       # {Authentication.Worker, arg},
       # Start to serve requests, typically the last entry
-      AuthenticationWeb.Endpoint
+      AuthenticationWeb.Endpoint,
+      {GRPC.Server.Supervisor, endpoint: TicketAuthentications.Endpoint, port: 50051, start_server: true}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
