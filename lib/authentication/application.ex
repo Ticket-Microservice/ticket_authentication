@@ -18,7 +18,10 @@ defmodule Authentication.Application do
       # {Authentication.Worker, arg},
       # Start to serve requests, typically the last entry
       AuthenticationWeb.Endpoint,
-      {GRPC.Server.Supervisor, endpoint: TicketAuthentications.Endpoint, port: 50051, start_server: true}
+      # {GRPC.Reflection.Server, []},
+      GrpcReflection,
+      {GRPC.Server.Supervisor, endpoint: TicketAuthentications.Endpoint, port: 50051, start_server: true},
+
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

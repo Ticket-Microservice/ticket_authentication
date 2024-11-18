@@ -3,4 +3,5 @@ defmodule TicketAuthentications.Endpoint do
 
   intercept GRPC.Server.Interceptors.Logger
   run TicketAuthentications.Greeter.Server
+  run TicketAuthentications.Reflection.Server
 end

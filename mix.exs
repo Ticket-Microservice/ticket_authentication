@@ -48,7 +48,8 @@ defmodule Authentication.MixProject do
       {:guardian, "~> 2.3"},
       {:bcrypt_elixir, "~> 3.0"},
       {:grpc, "~> 0.9"},
-      {:protobuf, "~> 0.13.0"}
+      {:protobuf, "~> 0.13.0"},
+      {:grpc_reflection, "~> 0.1.0"}
     ]
   end
 

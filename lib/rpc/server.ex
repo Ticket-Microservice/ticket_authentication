@@ -1,8 +1,8 @@
 defmodule TicketAuthentications.Greeter.Server do
   use GRPC.Server, service: TicketAuthentications.Greeter.Service
+  alias TicketAuthentications.Greeter.SayHello, as: SayHello
 
-  @spec say_hello(TicketAuthentications.HelloRequest.t, GRPC.Server.Stream.t) :: TicketAuthentications.HelloReply.t
   def say_hello(request, _stream) do
-    TicketAuthentications.HelloReply.new(message: "asqweq #{request.name}")
+    SayHello.say_hello(request, _stream)
   end
 end
