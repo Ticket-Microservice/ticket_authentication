@@ -1,4 +1,4 @@
-defmodule Authentication.User_Roles do
+defmodule Authentication.Schemas.User_Roles do
   use Ecto.Schema
   import Ecto.Changeset
 

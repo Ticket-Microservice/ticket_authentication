@@ -13,6 +13,7 @@ RUN mkdir /app
 WORKDIR /app
 COPY . .
 RUN mix do deps.get, deps.compile
+RUN mix ecto.migrate
 # COPY test_entrypoint.sh .
 # RUN chmod +x /app/test_entrypoint.sh
 

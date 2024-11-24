@@ -1,4 +1,4 @@
-defmodule Authentication.Users do
+defmodule Authentication.Schemas.Users do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -6,6 +6,8 @@ defmodule Authentication.Users do
     field :pwd, :string
     field :email, :string
     field :no_hp, :string
+    field :is_enabled, :boolean
+    belongs_to :gender, Authentication.Gender
 
     timestamps(type: :utc_datetime)
   end
@@ -14,6 +16,7 @@ defmodule Authentication.Users do
   def changeset(users, attrs) do
     users
     |> cast(attrs, [:email, :no_hp, :pwd])
-    |> validate_required([:email, :no_hp, :pwd])
+    |> validate_required([:email, :pwd])
+    |> validate_format(:email, ~r/\w*@\w*/, message: "Invalid email format")
   end
 end

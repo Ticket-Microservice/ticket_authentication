@@ -4,6 +4,8 @@ defmodule Authentication.Roles do
 
   schema "roles" do
     field :name, :string
+    field :is_enabled, :boolean
+    field :alter_id, :id
 
     timestamps(type: :utc_datetime)
   end

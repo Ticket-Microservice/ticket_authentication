@@ -1,4 +1,4 @@
-defmodule Authentication.Sessions do
+defmodule Authentication.Schemas.Sessions do
   use Ecto.Schema
   import Ecto.Changeset
 
