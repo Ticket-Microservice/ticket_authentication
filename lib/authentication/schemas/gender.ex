@@ -1,4 +1,4 @@
-defmodule Authentication.Gender do
+defmodule Authentication.Schemas.Gender do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -14,6 +14,7 @@ defmodule Authentication.Gender do
   def changeset(gender, attrs) do
     gender
     |> cast(attrs, [:is_enabled, :alter_id, :name])
-    |> validate_required([:is_enabled, :alter_id, :name])
+    |> validate_required([:is_enabled, :name])
+    |> unique_constraint(:name)
   end
 end

@@ -7,6 +7,8 @@ defmodule Authentication.Application do
 
   @impl true
   def start(_type, _args) do
+    start_servers = Application.get_env(:authentication, :start_servers, true)
+
     children = [
       AuthenticationWeb.Telemetry,
       Authentication.Repo,
@@ -17,12 +19,31 @@ defmodule Authentication.Application do
       # Start a worker by calling: Authentication.Worker.start_link(arg)
       # {Authentication.Worker, arg},
       # Start to serve requests, typically the last entry
-      AuthenticationWeb.Endpoint,
+      # AuthenticationWeb.Endpoint,
       # {GRPC.Reflection.Server, []},
-      GrpcReflection,
-      {GRPC.Server.Supervisor, endpoint: TicketAuthentications.Endpoint, port: 50051, start_server: true},
+      # GrpcReflection,
+      # {GRPC.Server.Supervisor, endpoint: TicketAuthentications.Endpoint, port: 50051, start_server: true},
 
     ]
+
+    children =
+      if start_servers do
+        children ++ [AuthenticationWeb.Endpoint]
+      else
+        children
+      end
+
+    # Conditionally add GRPC server
+    children =
+      if start_servers do
+        children ++ [
+          GrpcReflection,
+          {GRPC.Server.Supervisor,
+           endpoint: TicketAuthentications.Endpoint, port: 50051, start_server: true}
+        ]
+      else
+        children
+      end
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

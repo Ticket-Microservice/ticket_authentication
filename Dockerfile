@@ -12,11 +12,13 @@ RUN apk add --update alpine-sdk
 RUN mkdir /app
 WORKDIR /app
 COPY . .
+RUN chmod +x /app/entrypoint.sh
 RUN mix do deps.get, deps.compile
-RUN mix ecto.migrate
+# RUN mix ecto.migrate
+# RUN mix run priv/repo/seeds.exs
 # COPY test_entrypoint.sh .
 # RUN chmod +x /app/test_entrypoint.sh
 
 EXPOSE 4000 50051
-# CMD ["/app/entrypoint.sh"]
-CMD ["mix", "phx.server"]
+CMD ["/app/entrypoint.sh"]
+# ENTRYPOINT ["./entrypoint.sh"]

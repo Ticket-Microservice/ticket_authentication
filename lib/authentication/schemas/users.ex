@@ -18,5 +18,6 @@ defmodule Authentication.Schemas.Users do
     |> cast(attrs, [:email, :no_hp, :pwd])
     |> validate_required([:email, :pwd])
     |> validate_format(:email, ~r/\w*@\w*/, message: "Invalid email format")
+    |> unique_constraint(:name)
   end
 end
