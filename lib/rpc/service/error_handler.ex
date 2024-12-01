@@ -1,4 +1,4 @@
-defmodule Ticket_BE.ErrorHandler do
+defmodule Authentication.ErrorHandler do
   def changeset_error_handler(changeset_resp, nested_atom_arr) do
     errors = changeset_resp.errors
 

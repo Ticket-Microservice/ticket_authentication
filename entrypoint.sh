@@ -9,7 +9,7 @@ echo "Seeding the database..."
 mix run priv/repo/seeds.exs
 
 echo "Finish migrating and seeding"
-sleep 40
+sleep 5
 
 # Start the Phoenix server
 exec mix phx.server
