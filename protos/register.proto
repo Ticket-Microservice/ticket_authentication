@@ -10,7 +10,20 @@ enum Gender {
 
 message RegisterRequest{
     string email=1;
-    string pwd=3;
+    string pwd=2;
+}
+
+message LoginRequest{
+    string email=1;
+    string pwd=2;
+}
+
+message LoginResponse{
+    string jwt=1;
+}
+
+message LogoutRequest{
+    string jwt=1;
 }
 
 message UpdateProfileRequest{
@@ -26,4 +39,6 @@ service Register {
     // Greeting function
     rpc Register (RegisterRequest) returns (BlankResponse) {}
     rpc UpdateProfile (UpdateProfileRequest) returns (BlankResponse) {}
+    rpc Login (LoginRequest) returns (LoginResponse) {}
+    rpc Logout (LogoutRequest) returns (BlankResponse) {}
 }

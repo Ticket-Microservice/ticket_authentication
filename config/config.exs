@@ -22,8 +22,8 @@ config :authentication, AuthenticationWeb.Endpoint,
   pubsub_server: Authentication.PubSub,
   live_view: [signing_salt: "NVx2/StS"]
 
-config :authentication, Ticket_BE.Guardian,
-  issuer: "ticket_BE",
+config :authentication, Authentication.Guardian,
+  issuer: "Authentication",
   secret_key: System.get_env("SECRET_KEY"),
   # serializer: Ticket_BE.GuardianSerializer,
   allowed_algos: ["HS512"] # optional

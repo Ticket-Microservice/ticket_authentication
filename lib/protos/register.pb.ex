@@ -66,7 +66,7 @@ defmodule TicketAuthentications.RegisterRequest do
         %Google.Protobuf.FieldDescriptorProto{
           name: "pwd",
           extendee: nil,
-          number: 3,
+          number: 2,
           label: :LABEL_OPTIONAL,
           type: :TYPE_STRING,
           type_name: nil,
@@ -91,7 +91,142 @@ defmodule TicketAuthentications.RegisterRequest do
   end
 
   field :email, 1, type: :string
-  field :pwd, 3, type: :string
+  field :pwd, 2, type: :string
+end
+
+defmodule TicketAuthentications.LoginRequest do
+  @moduledoc false
+
+  use Protobuf, syntax: :proto3, protoc_gen_elixir_version: "0.13.0"
+
+  def descriptor do
+    # credo:disable-for-next-line
+    %Google.Protobuf.DescriptorProto{
+      name: "LoginRequest",
+      field: [
+        %Google.Protobuf.FieldDescriptorProto{
+          name: "email",
+          extendee: nil,
+          number: 1,
+          label: :LABEL_OPTIONAL,
+          type: :TYPE_STRING,
+          type_name: nil,
+          default_value: nil,
+          options: nil,
+          oneof_index: nil,
+          json_name: "email",
+          proto3_optional: nil,
+          __unknown_fields__: []
+        },
+        %Google.Protobuf.FieldDescriptorProto{
+          name: "pwd",
+          extendee: nil,
+          number: 2,
+          label: :LABEL_OPTIONAL,
+          type: :TYPE_STRING,
+          type_name: nil,
+          default_value: nil,
+          options: nil,
+          oneof_index: nil,
+          json_name: "pwd",
+          proto3_optional: nil,
+          __unknown_fields__: []
+        }
+      ],
+      nested_type: [],
+      enum_type: [],
+      extension_range: [],
+      extension: [],
+      options: nil,
+      oneof_decl: [],
+      reserved_range: [],
+      reserved_name: [],
+      __unknown_fields__: []
+    }
+  end
+
+  field :email, 1, type: :string
+  field :pwd, 2, type: :string
+end
+
+defmodule TicketAuthentications.LoginResponse do
+  @moduledoc false
+
+  use Protobuf, syntax: :proto3, protoc_gen_elixir_version: "0.13.0"
+
+  def descriptor do
+    # credo:disable-for-next-line
+    %Google.Protobuf.DescriptorProto{
+      name: "LoginResponse",
+      field: [
+        %Google.Protobuf.FieldDescriptorProto{
+          name: "jwt",
+          extendee: nil,
+          number: 1,
+          label: :LABEL_OPTIONAL,
+          type: :TYPE_STRING,
+          type_name: nil,
+          default_value: nil,
+          options: nil,
+          oneof_index: nil,
+          json_name: "jwt",
+          proto3_optional: nil,
+          __unknown_fields__: []
+        }
+      ],
+      nested_type: [],
+      enum_type: [],
+      extension_range: [],
+      extension: [],
+      options: nil,
+      oneof_decl: [],
+      reserved_range: [],
+      reserved_name: [],
+      __unknown_fields__: []
+    }
+  end
+
+  field :jwt, 1, type: :string
+end
+
+defmodule TicketAuthentications.LogoutRequest do
+  @moduledoc false
+
+  use Protobuf, syntax: :proto3, protoc_gen_elixir_version: "0.13.0"
+
+  def descriptor do
+    # credo:disable-for-next-line
+    %Google.Protobuf.DescriptorProto{
+      name: "LogoutRequest",
+      field: [
+        %Google.Protobuf.FieldDescriptorProto{
+          name: "jwt",
+          extendee: nil,
+          number: 1,
+          label: :LABEL_OPTIONAL,
+          type: :TYPE_STRING,
+          type_name: nil,
+          default_value: nil,
+          options: nil,
+          oneof_index: nil,
+          json_name: "jwt",
+          proto3_optional: nil,
+          __unknown_fields__: []
+        }
+      ],
+      nested_type: [],
+      enum_type: [],
+      extension_range: [],
+      extension: [],
+      options: nil,
+      oneof_decl: [],
+      reserved_range: [],
+      reserved_name: [],
+      __unknown_fields__: []
+    }
+  end
+
+  field :jwt, 1, type: :string
 end
 
 defmodule TicketAuthentications.UpdateProfileRequest do
@@ -241,6 +376,36 @@ defmodule TicketAuthentications.Register.Service do
           client_streaming: false,
           server_streaming: false,
           __unknown_fields__: []
+        },
+        %Google.Protobuf.MethodDescriptorProto{
+          name: "Login",
+          input_type: ".TicketAuthentications.LoginRequest",
+          output_type: ".TicketAuthentications.LoginResponse",
+          options: %Google.Protobuf.MethodOptions{
+            deprecated: false,
+            idempotency_level: :IDEMPOTENCY_UNKNOWN,
+            uninterpreted_option: [],
+            __pb_extensions__: %{},
+            __unknown_fields__: []
+          },
+          client_streaming: false,
+          server_streaming: false,
+          __unknown_fields__: []
+        },
+        %Google.Protobuf.MethodDescriptorProto{
+          name: "Logout",
+          input_type: ".TicketAuthentications.LogoutRequest",
+          output_type: ".TicketAuthentications.BlankResponse",
+          options: %Google.Protobuf.MethodOptions{
+            deprecated: false,
+            idempotency_level: :IDEMPOTENCY_UNKNOWN,
+            uninterpreted_option: [],
+            __pb_extensions__: %{},
+            __unknown_fields__: []
+          },
+          client_streaming: false,
+          server_streaming: false,
+          __unknown_fields__: []
         }
       ],
       options: nil,
@@ -253,6 +418,10 @@ defmodule TicketAuthentications.Register.Service do
   rpc :UpdateProfile,
       TicketAuthentications.UpdateProfileRequest,
       TicketAuthentications.BlankResponse
+
+  rpc :Login, TicketAuthentications.LoginRequest, TicketAuthentications.LoginResponse
+
+  rpc :Logout, TicketAuthentications.LogoutRequest, TicketAuthentications.BlankResponse
 end
 
 defmodule TicketAuthentications.Register.Stub do
