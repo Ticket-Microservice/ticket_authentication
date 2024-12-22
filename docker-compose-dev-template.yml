@@ -1,13 +1,15 @@
 # Defines the containers 
 services:
   # First project container (can be named anything)
-  db:
+  db_auth:
     image: postgres:17.0 
     restart: always
     ports:
       - '5433:5432' # expose 5433 on host and sent to 5432 in container
     volumes:
       - ./db:/var/lib/postgresql/data
+    networks:
+      - shared_network
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=Postgres
@@ -32,7 +34,8 @@ services:
       DATABASE_DBNAME: "auth"
       SECRET_KEY_BASE: 
       SECRET_KEY: 
-
+    networks:
+      - shared_network
     develop:
       watch:
         - action: sync
@@ -92,3 +95,7 @@ services:
     image: alpine:latest
     init: true
     command: ["sh", "-c", "while true; do sleep 2; done"]
+
+networks:
+  shared_network:
+    external: true

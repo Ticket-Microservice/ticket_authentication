@@ -1,4 +1,4 @@
-defmodule TicketAuthentications.Register do
+defmodule TicketAuthentications.RPC.Register do
   use GRPC.Server, service: TicketAuthentications.Register.Service
   alias GRPC.Status
   alias Authentication.Schemas.Users, as: Users

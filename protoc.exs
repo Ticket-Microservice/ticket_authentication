@@ -10,7 +10,8 @@ defmodule Protoc do
 
     protos_file = [
       "#{proto_path}/greeting.proto",
-      "#{proto_path}/register.proto"
+      "#{proto_path}/register.proto",
+      "#{proto_path}/healthcheck.proto"
     ]
     # Ensure output directory exists
     File.mkdir_p!(output_path)
