@@ -4,7 +4,8 @@ defmodule Authentication.Schemas.Sessions do
 
   schema "sessions" do
     field :session_data, :string
-    field :user_id, :id
+    belongs_to :users, Authentication.Schemas.Users
+    field :expired_at, :utc_datetime
 
     timestamps(type: :utc_datetime)
   end
@@ -12,7 +13,17 @@ defmodule Authentication.Schemas.Sessions do
   @doc false
   def changeset(sessions, attrs) do
     sessions
-    |> cast(attrs, [:session_data])
-    |> validate_required([:session_data])
+    |> cast(attrs, [:session_data, :expired_at])
+    |> cast_assoc(:users, with: &Authentication.Schemas.Users.changeset/2)
+    |> validate_required([:session_data, :expired_at])
+    |> hash_password(:session_data)
+  end
+
+  defp hash_password(changeset, field) do
+    if changeset |> get_change(field) do
+      put_change(changeset, field, Bcrypt.hash_pwd_salt(changeset |> get_change(field)))
+    else
+      changeset
+    end
   end
 end

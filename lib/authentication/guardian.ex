@@ -1,6 +1,7 @@
 defmodule Authentication.Guardian do
   use Guardian, otp_app: :authentication
   alias TicketAuthentications.Context.Users
+  alias TicketAuthentications.Context.Sessions
 
   def subject_for_token(%{id: id}, _claims) do
     # You can use any value for the subject of your token but
@@ -41,8 +42,12 @@ defmodule Authentication.Guardian do
           claims = %{}
           options = [ttl: {1, :hour}]
 
-          encode_and_sign(data, claims, options)
+          res = encode_and_sign(data, claims, options)
           |> IO.inspect(label: "auth jwt")
+
+          {:ok, jwt, opt} = res
+          Sessions.add_session(jwt, opt["exp"])
+          res
 
         {:error, msg} -> {:error, msg}
 

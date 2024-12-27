@@ -8,7 +8,7 @@ defmodule Authentication.Schemas.Users do
     field :no_hp, :string
     field :name, :string
     field :is_enabled, :boolean
-    belongs_to :gender, Authentication.Gender
+    belongs_to :gender, Authentication.Schemas.Gender
 
     timestamps(type: :utc_datetime)
   end
