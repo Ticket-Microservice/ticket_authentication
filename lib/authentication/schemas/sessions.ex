@@ -13,9 +13,9 @@ defmodule Authentication.Schemas.Sessions do
   @doc false
   def changeset(sessions, attrs) do
     sessions
-    |> cast(attrs, [:session_data, :expired_at])
-    |> cast_assoc(:users, with: &Authentication.Schemas.Users.changeset/2)
-    |> validate_required([:session_data, :expired_at])
+    |> cast(attrs, [:session_data, :expired_at, :users_id])
+    # |> cast_assoc(:users, with: &Authentication.Schemas.Users.changeset/2)
+    |> validate_required([:session_data, :expired_at, :users_id])
     |> hash_password(:session_data)
   end
 

@@ -32,25 +32,15 @@ defmodule Authentication.Guardian do
   end
 
   def authenticate(email, pwd) do
-    case Users.get_user_by_email_pwd(
-        email,
-        pwd
-      ) do
-        {:ok, data} ->
-          IO.inspect(data, label: "ini label")
-          # user = %User{id: data.id}
-          claims = %{}
-          options = [ttl: {1, :hour}]
+    claims = %{}
+    options = [ttl: {1, :hour}]
 
-          res = encode_and_sign(data, claims, options)
-          |> IO.inspect(label: "auth jwt")
-
-          {:ok, jwt, opt} = res
-          Sessions.add_session(jwt, opt["exp"])
-          res
-
-        {:error, msg} -> {:error, msg}
-
-      end
+    with {:ok, user_data} <- Users.get_user_by_email_pwd(email, pwd),
+         {:ok, jwt, opt} <- encode_and_sign(user_data, claims, options),
+         {:ok, _} <- Sessions.add_session(jwt, opt["exp"], user_data.id) do
+      {:ok, jwt, opt}
+    else
+      _ -> {:error, "Failed to Login"}
+    end
   end
 end

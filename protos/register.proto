@@ -35,10 +35,11 @@ message UpdateProfileRequest{
 
 message CheckTokenRequest{
     string jwt=1;
+    string user_id=2;
 }
 
 message CheckTokenResponse{
-    boolean isLogin=1;
+    bool isValid=1;
 }
 
 message BlankResponse{}
@@ -49,5 +50,5 @@ service Register {
     rpc UpdateProfile (UpdateProfileRequest) returns (BlankResponse) {}
     rpc Login (LoginRequest) returns (LoginResponse) {}
     rpc Logout (LogoutRequest) returns (BlankResponse) {}
-    rpc CheckToken ()
+    rpc CheckToken (CheckTokenRequest) returns (CheckTokenResponse) {}
 }

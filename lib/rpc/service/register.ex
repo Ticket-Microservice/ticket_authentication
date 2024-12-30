@@ -3,6 +3,7 @@ defmodule TicketAuthentications.RPC.Register do
   alias GRPC.Status
   alias Authentication.Schemas.Users, as: Users
   alias TicketAuthentications.Context.Users, as: ContextUser
+  alias TicketAuthentications.Context.Sessions
   alias Authentication.ErrorHandler
 
   require Logger
@@ -74,5 +75,25 @@ defmodule TicketAuthentications.RPC.Register do
                 e
               )
     end
+  end
+
+  def check_token(request, _stream) do
+    IO.inspect(request)
+
+    if !request.user_id ||
+         request.user_id == "" ||
+         !request.jwt ||
+         request.jwt == "" do
+      msg = "user_id or jwt is not specified"
+
+      raise GRPC.RPCError.exception(
+              GRPC.Status.invalid_argument(),
+              msg
+            )
+    end
+
+    %TicketAuthentications.CheckTokenResponse{
+      isValid: Sessions.check_token(String.to_integer(request.user_id), request.jwt)
+    }
   end
 end
