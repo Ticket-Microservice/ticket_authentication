@@ -26,12 +26,18 @@ config :authentication, Authentication.Guardian,
   issuer: "Authentication",
   secret_key: System.get_env("SECRET_KEY"),
   # serializer: Ticket_BE.GuardianSerializer,
-  allowed_algos: ["HS512"] # optional
-  # verify_module: Guardian.JWT,  # optional
-  # issuer: "Ticket_BE", # optional
-  # # ttl: { 1, :days },
-  # allowed_drift: 2000,
-  # verify_issuer: true # optional
+  # optional
+  allowed_algos: ["HS512"]
+
+# verify_module: Guardian.JWT,  # optional
+# issuer: "Ticket_BE", # optional
+# # ttl: { 1, :days },
+# allowed_drift: 2000,
+# verify_issuer: true # optional
+
+config :authentication, TicketAuthentications.RPC.Register,
+  rabbitmq_url: System.get_env("RABBITMQ_URL"),
+  rabbitmq_port: System.get_env("RABBITMQ_PORT")
 
 # Configures the mailer
 #

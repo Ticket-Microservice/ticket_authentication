@@ -49,7 +49,9 @@ defmodule Authentication.MixProject do
       {:bcrypt_elixir, "~> 3.0"},
       {:grpc, "~> 0.9"},
       {:protobuf, "~> 0.13.0"},
-      {:grpc_reflection, "~> 0.1.0"}
+      {:grpc_reflection, "~> 0.1.0"},
+      {:amqp, "~> 4.0"},
+      {:ranch, "~> 2.1", override: true}
     ]
   end
 
